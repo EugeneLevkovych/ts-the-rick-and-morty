@@ -19,6 +19,8 @@ export default function CharactersPage() {
   const [gender, setGender] = useState("");
   const [status, setStatus] = useState("");
 
+  console.log(charactersData);
+
   const selectFilters = getCharactersFilters({
     species,
     setSpecies,
