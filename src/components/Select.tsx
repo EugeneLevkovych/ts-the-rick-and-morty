@@ -1,10 +1,18 @@
+type SelectProps = {
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  options: string[];
+  className: string;
+  name: string;
+};
+
 export default function Select({
   onChange,
   value,
   options,
   name,
-  className = '',
-}) {
+  className = "",
+}: SelectProps) {
   return (
     <div className={`relative ${className}`}>
       <select
@@ -16,7 +24,7 @@ export default function Select({
         <option value="" disabled hidden>
           {name}
         </option>
-        {options.map(option => (
+        {options.map((option) => (
           <option key={option} value={option}>
             {option}
           </option>
