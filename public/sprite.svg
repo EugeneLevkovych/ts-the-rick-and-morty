@@ -1,0 +1,25 @@
+<svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<symbol id="icon-arrow1" viewBox="0 0 21 32">
+<path d="M5.333 0l-3.76 3.76 12.213 12.24-12.213 12.24 3.76 3.76 16-16-16-16z"></path>
+</symbol>
+<symbol id="icon-burger1" viewBox="0 0 48 32">
+<path d="M0 5.333v-5.333h48v5.333h-48zM0 18.667h48v-5.333h-48v5.333zM0 32h48v-5.333h-48v5.333z"></path>
+</symbol>
+<symbol id="icon-burger2" viewBox="0 0 53 32">
+<path d="M1.836 0v5.333h49.574v-5.333h-49.574zM21.115 32h11.016v-5.333h-11.017v5.333zM43.148 18.667h-33.049v-5.333h33.049v5.333z"></path>
+</symbol>
+<symbol id="icon-close" viewBox="0 0 32 32">
+<path d="M25.333 8.547l-1.88-1.88-7.453 7.453-7.453-7.453-1.88 1.88 7.453 7.453-7.453 7.453 1.88 1.88 7.453-7.453 7.453 7.453 1.88-1.88-7.453-7.453 7.453-7.453z"></path>
+</symbol>
+<symbol id="icon-leading" viewBox="0 0 32 32">
+<path d="M20.667 20h-1.053l-0.373-0.36c1.307-1.52 2.093-3.493 2.093-5.64 0-4.787-3.88-8.667-8.667-8.667s-8.667 3.88-8.667 8.667c0 4.787 3.88 8.667 8.667 8.667 2.147 0 4.12-0.787 5.64-2.093l0.36 0.373v1.053l6.667 6.653 1.987-1.987-6.653-6.667zM12.667 20c-3.32 0-6-2.68-6-6s2.68-6 6-6c3.32 0 6 2.68 6 6s-2.68 6-6 6z"></path>
+</symbol>
+<symbol id="icon-arrow-back" viewBox="0 0 32 32">
+<path d="M26.667 14.667h-16.227l7.453-7.453-1.893-1.88-10.667 10.667 10.667 10.667 1.88-1.88-7.44-7.453h16.227v-2.667z"></path>
+</symbol>
+<symbol id="icon-triangle-down" viewBox="0 0 32 32">
+<path d="M8.667 11.333l8 9.333 8-9.333h-16z"></path>
+</symbol>
+</defs>
+</svg>

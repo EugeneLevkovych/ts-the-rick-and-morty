@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: ##fff;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("/fonts/Roboto-Regular.ttf") format("ttf");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("/fonts/Roboto-Medium.ttf") format("ttf");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("/fonts/Roboto-Bold.ttf") format("ttf");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@utility container-centered {
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+
+  @media screen and (min-width: 768px) {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  @media screen and (min-width: 1280px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+@theme {
+  --shadow-card: 0 2px 4px 0 rgba(0, 0, 0, 0.14),
+    0 3px 4px 0 rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  --shadow-btn: 0 6px 10px 0 rgba(0, 0, 0, 0.14),
+    0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px 0 rgba(0, 0, 0, 0.2);
+  --shadow-top: 0 -4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 -2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-adv-filters-btn: 0 2px 2px 0 rgba(0, 0, 0, 0.24),
+    0 0 2px 0 rgba(0, 0, 0, 0.12);
+  --shadow-mob-menu: 2px 0 8px 2px rgba(0, 0, 0, 0.1);
+
+  --color-gray1: #00000080;
+  --color-gray2: #000000dd;
+  --color-gray3: #00000099;
+  --color-gray4: #00000089;
+  --color-gray5: #8e8e93;
+  --color-gray6: rgba(33, 33, 33, 0.08);
+  --color-gray7: #081f32;
+  --color-gray8: #6e798c;
+  --color-gray9: #f2f2f7;
+  --color-gray10: #0000008a;
+
+  --color-blue1: #2196f3;
+  --color-blue2: #e3f2fd;
+  --color-overlay: rgba(46, 47, 66, 0.6);
+}
