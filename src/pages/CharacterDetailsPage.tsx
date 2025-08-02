@@ -3,13 +3,15 @@ import { useLocation, useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import { getCharacterDetails } from "../data/characterDetailsData.ts";
 import { API_URL } from "../data/api.ts";
+import type { Character, Episode, LocationState } from "../types/api.ts";
+import ErrorPage from "./ErrorPage.tsx";
 
 export default function CharacterDetailsPage() {
-  const location = useLocation();
+  const location = useLocation() as { state: LocationState | null };
   const navigate = useNavigate();
-  const characterObj = location.state?.characterObj;
-  const [episodes, setEpisodes] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const characterObj: Character | undefined = location.state?.characterObj;
+  const [episodes, setEpisodes] = useState<Episode[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     fetchEpisodes();
@@ -23,7 +25,7 @@ export default function CharacterDetailsPage() {
     setLoading(true);
 
     try {
-      const episodeIds = characterObj.episode.map((url) => {
+      const episodeIds = characterObj.episode.map((url: string) => {
         const parts = url.split("/");
         return parts[parts.length - 1];
       });
@@ -46,6 +48,10 @@ export default function CharacterDetailsPage() {
   const handleGoBack = () => {
     navigate(-1);
   };
+
+  if (!characterObj) {
+    return <ErrorPage />;
+  }
 
   return (
     <div className="container pt-21 pb-20.5 md:pt-19 md:pb-9 container-centered">
