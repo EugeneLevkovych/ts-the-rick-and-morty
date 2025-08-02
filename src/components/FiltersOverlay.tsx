@@ -1,6 +1,10 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from "react";
 
-export default function FiltersOverlay({ children }) {
+type FiltersOverlayProps = {
+  children: ReactNode;
+};
+
+export default function FiltersOverlay({ children }: FiltersOverlayProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   function onClose() {
@@ -25,7 +29,7 @@ export default function FiltersOverlay({ children }) {
           className="fixed inset-0 z-50 bg-overlay md:hidden"
         >
           <div
-            onClick={e => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
             className="w-[80%] absolute top-1/2 left-1/2 -translate-1/2 bg-white rounded-sm pt-4 pb-5 px-3.5"
           >
             <div className="flex justify-between pb-4">

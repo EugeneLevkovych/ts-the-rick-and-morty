@@ -21,7 +21,7 @@ export default function LocationDetailsPage() {
       }
       try {
         const ids = locationObj.residents
-          .map((url) => url.split("/").pop())
+          .map((url: string) => url.split("/").pop())
           .join(",");
         const response = await axios.get(`${API_URL}/character/${ids}`);
 

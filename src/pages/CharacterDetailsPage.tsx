@@ -11,7 +11,7 @@ export default function CharacterDetailsPage() {
   const navigate = useNavigate();
   const characterObj: Character | undefined = location.state?.characterObj;
   const [episodes, setEpisodes] = useState<Episode[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchEpisodes();
