@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import { getLocationDetails } from "../data/locationDetailData.js";
 import { API_URL } from "../data/api.js";
 import Card from "../components/Card.js";
+import type { Character, LocationState } from "../types/api.ts";
+import ErrorPage from "./ErrorPage.tsx";
 
 export default function LocationDetailsPage() {
-  const location = useLocation();
+  const location = useLocation() as { state: LocationState };
   const locationObj = location.state?.locationObj;
-  const [residentsData, setResidentsData] = useState([]);
+  const [residentsData, setResidentsData] = useState<Character[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -38,6 +40,10 @@ export default function LocationDetailsPage() {
 
     fetchResidents();
   }, [locationObj]);
+
+  if (!locationObj) {
+    return <ErrorPage />;
+  }
 
   return (
     <>
