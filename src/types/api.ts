@@ -29,6 +29,16 @@ export type Episode = {
   created: string;
 };
 
+export type Location = {
+  id: number;
+  name: string;
+  type: string;
+  dimension: string;
+  residents: string[];
+  url: string;
+  created: string;
+};
+
 export type ApiInfo = {
   count: number;
   pages: number;
@@ -41,6 +51,12 @@ export type CharactersApiResponse = {
   results: Character[];
 };
 
+export type LocationsApiResponse = {
+  info: ApiInfo;
+  results: Location[];
+};
+
 export type LocationState = {
-  characterObj: Character;
+  characterObj?: Character;
+  locationObj?: Location;
 };

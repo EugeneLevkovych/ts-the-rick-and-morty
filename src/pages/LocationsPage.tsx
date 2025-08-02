@@ -9,13 +9,19 @@ import { API_URL } from "../data/api.ts";
 import { handleLoadMore } from "../utils/index.ts";
 import FiltersOverlay from "../components/FiltersOverlay.tsx";
 import Card from "../components/Card.tsx";
+import type { LocationsApiResponse } from "../types/api.ts";
 
 export default function LocationsPage() {
   const [searchLocation, setSearchLocation] = useState("");
-  const [locationData, setLocationData] = useState("");
+  const [locationData, setLocationData] = useState<LocationsApiResponse | null>(
+    null
+  );
   const [pageNumber, setPageNumber] = useState(1);
   const [type, setType] = useState("");
   const [dimension, setDimension] = useState("");
+  const [error, setError] = useState<string | null>(null);
+
+  console.log(locationData);
 
   const selectFilters = getLocationsFilters({
     type,
@@ -47,6 +53,7 @@ export default function LocationsPage() {
         }
       } catch (error) {
         console.error("Error fetching data:", error);
+        setError("Failed to load locations. Please try again later.");
       }
     }
 
@@ -87,21 +94,24 @@ export default function LocationsPage() {
       </div>
 
       <FiltersOverlay>{filters}</FiltersOverlay>
-
-      <ul className="flex flex-wrap justify-center gap-5 mb-12">
-        {locationData.results?.map((item) => (
-          <Card
-            key={item.id}
-            item={item}
-            stateKey="locationObj"
-            route="/location-details"
-            title={item.dimension}
-            subtitle={item.type}
-            height="h-78 md:h-32"
-            centered="flex justify-center items-center"
-          />
-        ))}
-      </ul>
+      {error ? (
+        <p className="text-center text-red-500">{error}</p>
+      ) : (
+        <ul className="flex flex-wrap justify-center gap-5 mb-12">
+          {locationData?.results?.map((item) => (
+            <Card
+              key={item.id}
+              item={item}
+              stateKey="locationObj"
+              route="/location-details"
+              title={item.dimension}
+              subtitle={item.type}
+              height="h-78 md:h-32"
+              centered="flex justify-center items-center"
+            />
+          ))}
+        </ul>
+      )}
       <LoadMoreBtn onClick={() => handleLoadMore(setPageNumber)} />
     </div>
   );
