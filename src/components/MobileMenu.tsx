@@ -1,7 +1,11 @@
-import logoBlack from '../assets/images/logo-black.png';
-import { NavLink } from 'react-router';
+import logoBlack from "../assets/images/logo-black.png";
+import { NavLink } from "react-router";
 
-export default function MobileMenu({ onToggleMenu }) {
+type MobileMenuProps = {
+  onToggleMenu: () => void;
+};
+
+export default function MobileMenu({ onToggleMenu }: MobileMenuProps) {
   return (
     <div className="fixed w-full min-h-screen z-50 md:hidden bg-white">
       <div className="container flex justify-between items-center border-b-0 shadow-mob-menu container-centered">
@@ -11,13 +15,13 @@ export default function MobileMenu({ onToggleMenu }) {
         </svg>
       </div>
       <div className="flex flex-col items-center font-bold text-2xl text-black gap-12 pt-12.5">
-        <NavLink onClick={onToggleMenu} to={'/'}>
+        <NavLink onClick={onToggleMenu} to={"/"}>
           Characters
         </NavLink>
-        <NavLink onClick={onToggleMenu} to={'locations'}>
+        <NavLink onClick={onToggleMenu} to={"locations"}>
           Locations
         </NavLink>
-        <NavLink onClick={onToggleMenu} to={'episodes'}>
+        <NavLink onClick={onToggleMenu} to={"episodes"}>
           Episodes
         </NavLink>
       </div>
