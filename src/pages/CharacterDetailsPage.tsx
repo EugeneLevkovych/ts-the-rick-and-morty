@@ -14,36 +14,40 @@ export default function CharacterDetailsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchEpisodes();
+    async function fetchEpisodes() {
+      if (!characterObj?.episode?.length) {
+        setLoading(false);
+        return;
+      }
+      setLoading(true);
+
+      try {
+        const episodeIds = characterObj.episode.map((url: string) => {
+          const parts = url.split("/");
+          return parts[parts.length - 1];
+        });
+
+        const response = await axios.get(
+          `${API_URL}/episode/${episodeIds.join(",")}`
+        );
+
+        const data = response.data;
+
+        setEpisodes(Array.isArray(data) ? data : [data]);
+      } catch (error) {
+        console.error("Error fetching episodes:", error);
+        setEpisodes([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (characterObj) {
+      fetchEpisodes();
+    } else {
+      setLoading(false);
+    }
   }, [characterObj]);
-
-  async function fetchEpisodes() {
-    if (!characterObj?.episode?.length) {
-      setLoading(false);
-      return;
-    }
-    setLoading(true);
-
-    try {
-      const episodeIds = characterObj.episode.map((url: string) => {
-        const parts = url.split("/");
-        return parts[parts.length - 1];
-      });
-
-      const response = await axios.get(
-        `${API_URL}/episode/${episodeIds.join(",")}`
-      );
-
-      const data = response.data;
-
-      setEpisodes(Array.isArray(data) ? data : [data]);
-    } catch (error) {
-      console.error("Error fetching episodes:", error);
-      setEpisodes([]);
-    } finally {
-      setLoading(false);
-    }
-  }
 
   const handleGoBack = () => {
     navigate(-1);
