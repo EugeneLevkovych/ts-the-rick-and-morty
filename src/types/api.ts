@@ -56,7 +56,13 @@ export type LocationsApiResponse = {
   results: Location[];
 };
 
+export type EpisodesApiResponse = {
+  info: ApiInfo;
+  results: Episode[];
+};
+
 export type LocationState = {
   characterObj?: Character;
   locationObj?: Location;
+  episodeObj?: Episode;
 };

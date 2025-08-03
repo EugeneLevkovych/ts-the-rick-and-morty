@@ -6,11 +6,15 @@ import LoadMoreBtn from "../components/LoadMoreBtn.tsx";
 import { API_URL } from "../data/api.ts";
 import { handleLoadMore } from "../utils/index.ts";
 import Card from "../components/Card.tsx";
+import type { EpisodesApiResponse } from "../types/api.ts";
 
 export default function EpisodesPage() {
   const [searchEpisodes, setSearchEpisodes] = useState("");
-  const [episodesData, setEpisodesData] = useState("");
+  const [episodesData, setEpisodesData] = useState<EpisodesApiResponse | null>(
+    null
+  );
   const [pageNumber, setPageNumber] = useState(1);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function getData() {
@@ -33,6 +37,7 @@ export default function EpisodesPage() {
         }
       } catch (error) {
         console.error("Error fetching data:", error);
+        setError("Failed to load episodes. Please try again later.");
       }
     }
     getData();
@@ -52,21 +57,26 @@ export default function EpisodesPage() {
           className="w-full md:w-125"
         />
       </div>
-      <ul className="flex flex-wrap justify-center gap-5 mb-12">
-        {episodesData &&
-          episodesData.results.map((item) => (
-            <Card
-              key={item.id}
-              item={item}
-              stateKey="episodeObj"
-              route="/episode-details"
-              title={item.name}
-              subtitle={item.air_date}
-              height="h-78 md:h-32"
-              centered="flex justify-center items-center"
-            />
-          ))}
-      </ul>
+
+      {error ? (
+        <p className="text-center text-red-500">{error}</p>
+      ) : (
+        <ul className="flex flex-wrap justify-center gap-5 mb-12">
+          {episodesData &&
+            episodesData.results.map((item) => (
+              <Card
+                key={item.id}
+                item={item}
+                stateKey="episodeObj"
+                route="/episode-details"
+                title={item.name}
+                subtitle={item.air_date}
+                height="h-78 md:h-32"
+                centered="flex justify-center items-center"
+              />
+            ))}
+        </ul>
+      )}
       <LoadMoreBtn onClick={() => handleLoadMore(setPageNumber)} />
     </div>
   );

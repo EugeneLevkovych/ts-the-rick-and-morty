@@ -1,8 +1,8 @@
 import { NavLink } from "react-router";
-import type { Character, Location } from "../types/api";
+import type { Character, Location, Episode } from "../types/api";
 
 type CardProps = {
-  item: Character | Location;
+  item: Character | Location | Episode;
   stateKey?: string;
   route: string;
   title: string;

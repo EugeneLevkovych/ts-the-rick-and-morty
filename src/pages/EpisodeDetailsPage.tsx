@@ -21,7 +21,7 @@ export default function EpisodeDetailsPage() {
       }
       try {
         const ids = episodeObj.characters
-          .map((url) => url.split("/").pop())
+          .map((url: string) => url.split("/").pop())
           .join(",");
         const response = await axios.get(`${API_URL}/character/${ids}`);
 
