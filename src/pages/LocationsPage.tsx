@@ -21,8 +21,6 @@ export default function LocationsPage() {
   const [dimension, setDimension] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  console.log(locationData);
-
   const selectFilters = getLocationsFilters({
     type,
     setType,

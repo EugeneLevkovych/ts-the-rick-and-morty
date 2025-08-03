@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import { getEpisodeDetails } from "../data/episodeDetailsData.ts";
 import { API_URL } from "../data/api.ts";
 import Card from "../components/Card.tsx";
+import ErrorPage from "./ErrorPage.tsx";
+import type { Character, LocationState } from "../types/api.ts";
 
 export default function EpisodeDetailsPage() {
-  const episode = useLocation();
+  const episode = useLocation() as { state: LocationState };
   const episodeObj = episode.state?.episodeObj;
-  const [charactersData, setCharactersData] = useState([]);
+  const [charactersData, setCharactersData] = useState<Character[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,7 +27,7 @@ export default function EpisodeDetailsPage() {
           .join(",");
         const response = await axios.get(`${API_URL}/character/${ids}`);
 
-        const data = await response.data;
+        const data = response.data;
 
         setCharactersData(Array.isArray(data) ? data : [data]);
       } catch (error) {
@@ -39,11 +41,15 @@ export default function EpisodeDetailsPage() {
     fetchEpisodes();
   }, [episodeObj]);
 
+  if (!episodeObj) {
+    return <ErrorPage />;
+  }
+
   return (
     <>
       <div className="container pt-21 pb-20.5 md:pt-22.5 md:pb-9 container-centered">
         <div className="flex flex-col md:flex-row md:gap-40 lg:gap-70 xl:gap-100 md:items-center md:mb-6">
-          <NavLink to={"/locations"}>
+          <NavLink to={"/episodes"}>
             <div className="flex items-center gap-2 font-bold text-lg text-black uppercase cursor-pointer mb-4">
               <svg className="size-6">
                 <use href="./sprite.svg#icon-arrow-back"></use>
