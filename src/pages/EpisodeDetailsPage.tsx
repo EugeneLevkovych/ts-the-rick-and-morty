@@ -1,47 +1,72 @@
 import axios from "axios";
-import { NavLink, useLocation } from "react-router";
+import { NavLink, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { getEpisodeDetails } from "../data/episodeDetailsData.ts";
 import { API_URL } from "../data/api.ts";
 import Card from "../components/Card.tsx";
 import ErrorPage from "./ErrorPage.tsx";
-import type { Character, LocationState } from "../types/api.ts";
+import type { Character, Episode } from "../types/api.ts";
 
 export default function EpisodeDetailsPage() {
-  const episode = useLocation() as { state: LocationState };
-  const episodeObj = episode.state?.episodeObj;
+  const { id } = useParams<{ id: string }>();
+  const [episodeObj, setEpisodeObj] = useState<Episode | null>(null);
   const [charactersData, setCharactersData] = useState<Character[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    async function fetchEpisodes() {
-      setLoading(true);
-
-      if (!episodeObj?.characters?.length) {
+    async function fetchEpisodeData() {
+      if (!id) {
+        setError(true);
         setLoading(false);
         return;
       }
+
       try {
-        const ids = episodeObj.characters
-          .map((url: string) => url.split("/").pop())
-          .join(",");
-        const response = await axios.get(`${API_URL}/character/${ids}`);
+        setLoading(true);
+        setError(false);
 
-        const data = response.data;
+        const response = await axios.get(`${API_URL}/episode/${id}`);
+        const episode = response.data;
+        setEpisodeObj(episode);
 
-        setCharactersData(Array.isArray(data) ? data : [data]);
+        if (episode.characters?.length) {
+          const characterIds = episode.characters
+            .map((url: string) => url.split("/").pop())
+            .join(",");
+          const charactersResponse = await axios.get(
+            `${API_URL}/character/${characterIds}`
+          );
+
+          const charactersData = charactersResponse.data;
+          setCharactersData(
+            Array.isArray(charactersData) ? charactersData : [charactersData]
+          );
+        } else {
+          setCharactersData([]);
+        }
       } catch (error) {
-        console.error("Error fetching characters:", error);
+        console.error("Error fetching episode:", error);
+        setError(true);
+        setEpisodeObj(null);
         setCharactersData([]);
       } finally {
         setLoading(false);
       }
     }
 
-    fetchEpisodes();
-  }, [episodeObj]);
+    fetchEpisodeData();
+  }, [id]);
 
-  if (!episodeObj) {
+  if (loading) {
+    return (
+      <div className="container pt-21 pb-20.5 md:pt-22.5 md:pb-9 container-centered">
+        <p>Loading episode...</p>
+      </div>
+    );
+  }
+
+  if (error || !episodeObj) {
     return <ErrorPage />;
   }
 
@@ -75,24 +100,19 @@ export default function EpisodeDetailsPage() {
         <p className="font-medium text-xl leading-[1.2 tracking-[.01em]] text-gray5 mb-6">
           Cast
         </p>
-        {loading ? (
-          <p>Loading Residents...</p>
-        ) : (
-          <ul className="flex flex-wrap justify-center gap-5">
-            {charactersData.map((item) => (
-              <Card
-                key={item.id}
-                item={item}
-                stateKey="characterObj"
-                route="/character-details"
-                title={item.name}
-                subtitle={item.species}
-                image={item.image}
-                height="h-auto md:h-61"
-              />
-            ))}
-          </ul>
-        )}
+        <ul className="flex flex-wrap justify-center gap-5">
+          {charactersData.map((item) => (
+            <Card
+              key={item.id}
+              item={item}
+              route={`/character/${item.id}`}
+              title={item.name}
+              subtitle={item.species}
+              image={item.image}
+              height="h-auto md:h-61"
+            />
+          ))}
+        </ul>
       </div>
     </>
   );

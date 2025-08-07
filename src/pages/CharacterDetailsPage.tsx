@@ -1,59 +1,76 @@
 import axios from "axios";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useState, useEffect } from "react";
 import { getCharacterDetails } from "../data/characterDetailsData.ts";
 import { API_URL } from "../data/api.ts";
-import type { Character, Episode, LocationState } from "../types/api.ts";
+import type { Character, Episode } from "../types/api.ts";
 import ErrorPage from "./ErrorPage.tsx";
 
 export default function CharacterDetailsPage() {
-  const location = useLocation() as { state: LocationState | null };
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const characterObj: Character | undefined = location.state?.characterObj;
+  const [characterObj, setCharacterObj] = useState<Character | null>(null);
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    async function fetchEpisodes() {
-      if (!characterObj?.episode?.length) {
+    async function fetchCharacterData() {
+      if (!id) {
+        setError(true);
         setLoading(false);
         return;
       }
-      setLoading(true);
 
       try {
-        const episodeIds = characterObj.episode.map((url: string) => {
-          const parts = url.split("/");
-          return parts[parts.length - 1];
-        });
+        setLoading(true);
+        setError(false);
 
-        const response = await axios.get(
-          `${API_URL}/episode/${episodeIds.join(",")}`
-        );
+        const response = await axios.get(`${API_URL}/character/${id}`);
+        const character = response.data;
+        setCharacterObj(character);
 
-        const data = response.data;
+        if (character.episode?.length) {
+          const episodeIds = character.episode.map((url: string) => {
+            const parts = url.split("/");
+            return parts[parts.length - 1];
+          });
 
-        setEpisodes(Array.isArray(data) ? data : [data]);
+          const episodeResponse = await axios.get(
+            `${API_URL}/episode/${episodeIds.join(",")}`
+          );
+
+          const episodeData = episodeResponse.data;
+          setEpisodes(Array.isArray(episodeData) ? episodeData : [episodeData]);
+        } else {
+          setEpisodes([]);
+        }
       } catch (error) {
-        console.error("Error fetching episodes:", error);
+        console.error("Error fetching character:", error);
+        setError(true);
+        setCharacterObj(null);
         setEpisodes([]);
       } finally {
         setLoading(false);
       }
     }
 
-    if (characterObj) {
-      fetchEpisodes();
-    } else {
-      setLoading(false);
-    }
-  }, [characterObj]);
+    fetchCharacterData();
+  }, [id]);
 
   const handleGoBack = () => {
     navigate(-1);
   };
 
-  if (!characterObj) {
+  if (loading) {
+    return (
+      <div className="container pt-21 pb-20.5 md:pt-19 md:pb-9 container-centered">
+        <p>Loading character...</p>
+      </div>
+    );
+  }
+
+  if (error || !characterObj) {
     return <ErrorPage />;
   }
 
@@ -100,31 +117,27 @@ export default function CharacterDetailsPage() {
           <p className="font-medium text-xl leading-tight tracking-[.01em] text-gray5 mb-4">
             Episodes
           </p>
-          {loading ? (
-            <p>Loading episodes...</p>
-          ) : (
-            <ul>
-              {episodes.map((episode) => (
-                <li
-                  key={episode.id}
-                  className="relative w-full border-b border-gray6 pt-[10px] pb-4 px-4"
-                >
-                  <p className="font-bold tracking-[0.01em] text-gray7">
-                    {episode.name}
-                  </p>
-                  <p className="text-sm leading-[1.42] tracking-[.02em] text-gray8">
-                    {episode.episode}
-                  </p>
-                  <p className="font-medium text-[10px] leading-[1.6] tracking-[.15em] uppercase text-gray5">
-                    {episode.air_date}
-                  </p>
-                  <svg className="absolute size-4 top-9.5 right-9.5 fill-gray5">
-                    <use href="./sprite.svg#icon-arrow1"></use>
-                  </svg>
-                </li>
-              ))}
-            </ul>
-          )}
+          <ul>
+            {episodes.map((episode) => (
+              <li
+                key={episode.id}
+                className="relative w-full border-b border-gray6 pt-[10px] pb-4 px-4"
+              >
+                <p className="font-bold tracking-[0.01em] text-gray7">
+                  {episode.name}
+                </p>
+                <p className="text-sm leading-[1.42] tracking-[.02em] text-gray8">
+                  {episode.episode}
+                </p>
+                <p className="font-medium text-[10px] leading-[1.6] tracking-[.15em] uppercase text-gray5">
+                  {episode.air_date}
+                </p>
+                <svg className="absolute size-4 top-9.5 right-9.5 fill-gray5">
+                  <use href="./sprite.svg#icon-arrow1"></use>
+                </svg>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

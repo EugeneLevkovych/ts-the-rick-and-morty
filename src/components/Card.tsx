@@ -3,7 +3,6 @@ import type { Character, Location, Episode } from "../types/api";
 
 type CardProps = {
   item: Character | Location | Episode;
-  stateKey?: string;
   route: string;
   title: string;
   subtitle: string;
@@ -13,8 +12,6 @@ type CardProps = {
 };
 
 export default function Card({
-  item,
-  stateKey = "characterObj",
   route,
   title,
   subtitle,
@@ -22,13 +19,11 @@ export default function Card({
   height,
   centered,
 }: CardProps) {
-  const linkState = { [stateKey]: item };
-
   return (
     <li
       className={`${height} w-full md:w-60 rounded-sm shadow-card overflow-hidden cursor-pointer ${centered}`}
     >
-      <NavLink to={route} state={linkState}>
+      <NavLink to={route}>
         {image && (
           <img className="h-auto md:h-42 w-full" src={image} alt={title} />
         )}

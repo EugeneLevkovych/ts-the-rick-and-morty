@@ -17,9 +17,9 @@ const router = createBrowserRouter([
       { index: true, element: <CharactersPage /> },
       { path: "locations", element: <LocationsPage /> },
       { path: "episodes", element: <EpisodesPage /> },
-      { path: "character-details", element: <CharacterDetailsPage /> },
-      { path: "location-details", element: <LocationDetailsPage /> },
-      { path: "episode-details", element: <EpisodeDetailsPage /> },
+      { path: "character/:id", element: <CharacterDetailsPage /> },
+      { path: "location/:id", element: <LocationDetailsPage /> },
+      { path: "episode/:id", element: <EpisodeDetailsPage /> },
     ],
   },
 ]);
