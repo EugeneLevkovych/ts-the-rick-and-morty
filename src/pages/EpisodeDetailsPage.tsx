@@ -6,6 +6,7 @@ import { API_URL } from "../data/api.ts";
 import Card from "../components/Card.tsx";
 import ErrorPage from "./ErrorPage.tsx";
 import type { Character, Episode } from "../types/api.ts";
+import GoBackBtn from "../components/GoBackBtn.tsx";
 
 export default function EpisodeDetailsPage() {
   const { id } = useParams<{ id: string }>();
@@ -75,12 +76,7 @@ export default function EpisodeDetailsPage() {
       <div className="container pt-21 pb-20.5 md:pt-22.5 md:pb-9 container-centered">
         <div className="flex flex-col md:flex-row md:gap-40 lg:gap-70 xl:gap-100 md:items-center md:mb-6">
           <NavLink to={"/episodes"}>
-            <div className="flex items-center gap-2 font-bold text-lg text-black uppercase cursor-pointer mb-4">
-              <svg className="size-6">
-                <use href="./sprite.svg#icon-arrow-back"></use>
-              </svg>
-              <p>Go back</p>
-            </div>
+            <GoBackBtn />
           </NavLink>
 
           <p className="text-4xl text-center text-gray7 mb-6">

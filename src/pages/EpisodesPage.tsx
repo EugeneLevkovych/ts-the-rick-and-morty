@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Input from "../components/Input.tsx";
 import LoadMoreBtn from "../components/LoadMoreBtn.tsx";
 import { API_URL } from "../data/api.ts";
-import { handleLoadMore } from "../utils/index.ts";
+import { handleLoadMore } from "../utils";
 import Card from "../components/Card.tsx";
 import type { EpisodesApiResponse } from "../types/api.ts";
 

@@ -1,14 +1,14 @@
 import axios from "axios";
-import { useNavigate, useParams } from "react-router";
+import { NavLink, useParams } from "react-router";
 import { useState, useEffect } from "react";
 import { getCharacterDetails } from "../data/characterDetailsData.ts";
 import { API_URL } from "../data/api.ts";
 import type { Character, Episode } from "../types/api.ts";
 import ErrorPage from "./ErrorPage.tsx";
+import GoBackBtn from "../components/GoBackBtn.tsx";
 
 export default function CharacterDetailsPage() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const [characterObj, setCharacterObj] = useState<Character | null>(null);
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [loading, setLoading] = useState(true);
@@ -58,10 +58,6 @@ export default function CharacterDetailsPage() {
     fetchCharacterData();
   }, [id]);
 
-  const handleGoBack = () => {
-    navigate(-1);
-  };
-
   if (loading) {
     return (
       <div className="container pt-21 pb-20.5 md:pt-19 md:pb-9 container-centered">
@@ -76,15 +72,9 @@ export default function CharacterDetailsPage() {
 
   return (
     <div className="container pt-21 pb-20.5 md:pt-19 md:pb-9 container-centered">
-      <div
-        onClick={handleGoBack}
-        className="flex items-center gap-2 font-bold text-lg text-black uppercase cursor-pointer mb-4"
-      >
-        <svg className="size-6">
-          <use href="./sprite.svg#icon-arrow-back"></use>
-        </svg>
-        <p>Go back</p>
-      </div>
+      <NavLink to={"/"}>
+        <GoBackBtn />
+      </NavLink>
       <img
         className="size-37 md:size-75 border-5 border-gray9 rounded-full mx-auto md:-mt-11 mb-4"
         src={characterObj.image}
