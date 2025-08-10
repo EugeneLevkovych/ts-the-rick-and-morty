@@ -74,7 +74,9 @@ export default function LocationDetailsPage() {
         <div className="flex flex-col md:flex-row md:gap-40 lg:gap-70 xl:gap-100 md:items-center md:mb-6">
           <GoBackBtn to="/locations" />
 
-          <p className="text-4xl text-center text-gray7">{locationObj.name}</p>
+          <p className="text-4xl text-center text-gray7 mb-6 md:mb-0">
+            {locationObj.name}
+          </p>
         </div>
         <ul className="flex justify-around mb-16">
           {getLocationDetails(locationObj).map(([label, value]) => (

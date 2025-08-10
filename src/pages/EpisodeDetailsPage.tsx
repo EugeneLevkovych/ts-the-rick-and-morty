@@ -74,7 +74,7 @@ export default function EpisodeDetailsPage() {
         <div className="flex flex-col md:flex-row md:gap-40 lg:gap-70 xl:gap-100 md:items-center md:mb-6">
           <GoBackBtn to="/episodes" />
 
-          <p className="text-4xl text-center text-gray7 mb-6">
+          <p className="text-4xl text-center text-gray7 mb-6 md:mb-0">
             {episodeObj.name}
           </p>
         </div>
