@@ -119,7 +119,7 @@ export default function CharacterDetailsPage() {
                   {episode.air_date}
                 </p>
                 <svg className="absolute size-4 top-9.5 right-9.5 fill-gray5">
-                  <use href="./sprite.svg#icon-arrow1"></use>
+                  <use href="/sprite.svg#icon-arrow-right"></use>
                 </svg>
               </li>
             ))}
