@@ -1,5 +1,5 @@
 import axios from "axios";
-import { NavLink, useParams } from "react-router";
+import { useParams } from "react-router";
 import { useState, useEffect } from "react";
 import { getCharacterDetails } from "../data/characterDetailsData.ts";
 import { API_URL } from "../data/api.ts";
@@ -72,9 +72,8 @@ export default function CharacterDetailsPage() {
 
   return (
     <div className="container pt-21 pb-20.5 md:pt-19 md:pb-9 container-centered">
-      <NavLink to={"/"}>
-        <GoBackBtn />
-      </NavLink>
+      <GoBackBtn to="/" />
+
       <img
         className="size-37 md:size-75 border-5 border-gray9 rounded-full mx-auto md:-mt-11 mb-4"
         src={characterObj.image}

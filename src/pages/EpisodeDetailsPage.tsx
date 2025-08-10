@@ -1,5 +1,5 @@
 import axios from "axios";
-import { NavLink, useParams } from "react-router";
+import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { getEpisodeDetails } from "../data/episodeDetailsData.ts";
 import { API_URL } from "../data/api.ts";
@@ -75,9 +75,7 @@ export default function EpisodeDetailsPage() {
     <>
       <div className="container pt-21 pb-20.5 md:pt-22.5 md:pb-9 container-centered">
         <div className="flex flex-col md:flex-row md:gap-40 lg:gap-70 xl:gap-100 md:items-center md:mb-6">
-          <NavLink to={"/episodes"}>
-            <GoBackBtn />
-          </NavLink>
+          <GoBackBtn to="/episodes" />
 
           <p className="text-4xl text-center text-gray7 mb-6">
             {episodeObj.name}
