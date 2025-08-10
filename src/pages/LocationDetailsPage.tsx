@@ -7,6 +7,7 @@ import Card from "../components/Card.js";
 import type { Character, Location } from "../types/api.ts";
 import ErrorPage from "./ErrorPage.tsx";
 import GoBackBtn from "../components/GoBackBtn.tsx";
+import Loader from "../components/Loader.tsx";
 
 export default function LocationDetailsPage() {
   const { id } = useParams<{ id: string }>();
@@ -60,11 +61,7 @@ export default function LocationDetailsPage() {
   }, [id]);
 
   if (loading) {
-    return (
-      <div className="container pt-21 pb-20.5 md:pt-22.5 md:pb-9 container-centered">
-        <p>Loading location...</p>
-      </div>
-    );
+    return <Loader item="location" />;
   }
 
   if (error || !locationObj) {

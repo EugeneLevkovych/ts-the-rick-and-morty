@@ -7,6 +7,7 @@ import Card from "../components/Card.tsx";
 import ErrorPage from "./ErrorPage.tsx";
 import type { Character, Episode } from "../types/api.ts";
 import GoBackBtn from "../components/GoBackBtn.tsx";
+import Loader from "../components/Loader.tsx";
 
 export default function EpisodeDetailsPage() {
   const { id } = useParams<{ id: string }>();
@@ -60,11 +61,7 @@ export default function EpisodeDetailsPage() {
   }, [id]);
 
   if (loading) {
-    return (
-      <div className="container pt-21 pb-20.5 md:pt-22.5 md:pb-9 container-centered">
-        <p>Loading episode...</p>
-      </div>
-    );
+    return <Loader item="episode" />;
   }
 
   if (error || !episodeObj) {

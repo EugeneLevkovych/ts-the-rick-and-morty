@@ -6,6 +6,7 @@ import { API_URL } from "../data/api.ts";
 import type { Character, Episode } from "../types/api.ts";
 import ErrorPage from "./ErrorPage.tsx";
 import GoBackBtn from "../components/GoBackBtn.tsx";
+import Loader from "../components/Loader.tsx";
 
 export default function CharacterDetailsPage() {
   const { id } = useParams<{ id: string }>();
@@ -59,11 +60,7 @@ export default function CharacterDetailsPage() {
   }, [id]);
 
   if (loading) {
-    return (
-      <div className="container pt-21 pb-20.5 md:pt-19 md:pb-9 container-centered">
-        <p>Loading character...</p>
-      </div>
-    );
+    return <Loader item="character" />;
   }
 
   if (error || !characterObj) {
