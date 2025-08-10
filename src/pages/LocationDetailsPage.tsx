@@ -6,7 +6,7 @@ import { API_URL } from "../data/api.js";
 import Card from "../components/Card.js";
 import type { Character, Location } from "../types/api.ts";
 import ErrorPage from "./ErrorPage.tsx";
-// import GoBackBtn from "../components/GoBackBtn.tsx";
+import GoBackBtn from "../components/GoBackBtn.tsx";
 import Loader from "../components/Loader.tsx";
 
 export default function LocationDetailsPage() {
@@ -72,7 +72,7 @@ export default function LocationDetailsPage() {
     <>
       <div className="container pt-21 pb-20.5 md:pt-22.5 md:pb-9 container-centered">
         <div className="flex flex-col md:flex-row md:gap-40 lg:gap-70 xl:gap-100 md:items-center md:mb-6">
-          {/* <GoBackBtn to="/locations" /> */}
+          <GoBackBtn to="/locations" />
 
           <p className="text-4xl text-center text-gray7 mb-6 md:mb-0">
             {locationObj.name}
