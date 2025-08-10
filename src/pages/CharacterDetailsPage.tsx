@@ -72,7 +72,7 @@ export default function CharacterDetailsPage() {
       <GoBackBtn to="/" />
 
       <img
-        className="size-37 md:size-75 border-5 border-gray9 rounded-full mx-auto md:-mt-11 mb-4"
+        className="size-37 md:size-75 border-5 border-gray9 rounded-full mx-auto md:-mt-7 mb-4"
         src={characterObj.image}
       />
       <p className="text-[2rem] text-center text-gray7 pb-4">
